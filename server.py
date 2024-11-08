@@ -1,6 +1,5 @@
 import socket
 import threading
-from cgitb import handler
 
 import Ping
 import Ports
@@ -65,7 +64,7 @@ class ConnectionHandler:
         self.client_socket = client_socket
         self.server = server
         self.connected = True
-        self.ID = None
+        self.ID=None
 
     # Main loop to handle commands sent by the client
     def run(self):
@@ -86,8 +85,12 @@ class ConnectionHandler:
                     self.client_socket.sendall(b'How old are you?!!\n')
                     age = self.client_socket.recv(1024).decode().strip()
 
-            # Save user ID after successful input
-            self.ID = self.server.post(name, age)
+            # post information of user
+            self.server.post(name, age)
+            # Save user ID
+            self.set_ID(name,age)
+
+
             print(f"{name} connected!")
 
             # Print available commands on start
@@ -112,6 +115,34 @@ class ConnectionHandler:
                     else:
                         self.send_message("Usage: /ping <hostname/IP>")
 
+                # Command to check a range of ports on a host
+                elif command.lower().startswith("/port"):
+                    if 3 <= len(parameters) <= 4:
+                        print(f"{self.ID}: {message}")
+                        ip = parameters[0]
+                        self.send_message(Ping.is_host_online(ip))
+                        if len(parameters) < 4:
+                            self.send_message(
+                                Ports.check_range_of_open_ports(ip, int(parameters[1]), int(parameters[2])))
+                        else:
+                            self.send_message(
+                                Ports.check_range_of_open_ports(ip, int(parameters[1]), int(parameters[2]),
+                                                                int(parameters[3])))
+                    else:
+                        self.send_message("Usage: /port <hostname/IP> <start_port> <end_port> <#num_requests>")
+
+                # Command to check response time of a specific port
+                elif command.lower().startswith("/res_time"):
+                    if 2 <= len(parameters) <= 3:
+                        print(f"{self.ID}: {message}")
+                        ip = parameters[0]
+                        self.send_message(Ping.is_host_online(ip))
+                        if len(parameters) < 3:
+                            self.send_message(Ports.is_port_open(ip, int(parameters[1])))
+                        else:
+                            self.send_message(Ports.is_port_open(ip, int(parameters[1]), int(parameters[2])))
+                    else:
+                        self.send_message("Usage: /res_time <hostname/IP> <port> <#num_requests>")
                 # Command to retrieve user data
                 elif command.lower().startswith("/get"):
                     if len(parameters) == 1:
@@ -124,7 +155,7 @@ class ConnectionHandler:
                 elif command.lower().startswith("/post"):
                     if len(parameters) == 2:
                         print(f"{self.ID}: {message}")
-                        self.send_message(self.server.post(name, age))
+                        self.send_message(self.server.post(parameters[0], parameters[1]))
                     else:
                         self.send_message("Usage: /POST <user_name> <user_age>")
 
@@ -153,6 +184,11 @@ class ConnectionHandler:
             self.client_socket.close()
         except Exception as e:
             print(f"Shutdown error: {e}")
+
+    def set_ID(self,name,age):
+        for key, value in USERS.items():
+            if value == {'name': name, 'age': age}:
+                self.ID = key
 
 
 # Function to print available commands for the user

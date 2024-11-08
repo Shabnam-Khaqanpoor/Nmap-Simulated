@@ -59,6 +59,21 @@ class Client:
                         print("Usage: /ping <hostname/IP>")
 
 
+
+                # Command to check range of open ports
+                elif command.lower().startswith("/port"):
+                    if 3 <= len(parameters) <= 4:
+                        self.int_checker(int_inputs, message)  # Validate integer inputs before sending
+                    else:
+                        print("Usage: /port <hostname/IP> <start_port> <end_port> <#num_requests>")
+
+                # Command to check response time on a specific port
+                elif command.lower().startswith("/res_time"):
+                    if 2 <= len(parameters) <= 3:
+                        self.int_checker(int_inputs, message)  # Validate integer inputs
+                    else:
+                        print("Usage: /res_time <hostname/IP> <port> <#num_requests>")
+
                 # Command to retrieve user information
                 elif command.lower().startswith("/get"):
                     if len(parameters) == 1:
