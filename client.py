@@ -51,6 +51,14 @@ class Client:
                     self.client_socket.sendall(message.encode())
                     self.shutdown()
 
+                # Command to ping a host
+                elif command.lower().startswith("/ping"):
+                    if len(parameters) == 1:
+                        self.client_socket.sendall(message.encode())
+                    else:
+                        print("Usage: /ping <hostname/IP>")
+
+
                 # Command to retrieve user information
                 elif command.lower().startswith("/get"):
                     if len(parameters) == 1:

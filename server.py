@@ -104,7 +104,13 @@ class ConnectionHandler:
                 # Command to exit the session
                 if command.lower() == '/exit':
                     self.shutdown()
-
+                # Command to ping a host
+                elif command.lower().startswith("/ping"):
+                    if len(parameters) == 1:
+                        print(f"{self.ID}: {message}")
+                        self.send_message(Ping.is_host_online(parameters[0]))
+                    else:
+                        self.send_message("Usage: /ping <hostname/IP>")
 
                 # Command to retrieve user data
                 elif command.lower().startswith("/get"):
