@@ -1,8 +1,8 @@
-# Nmap Simulation Project 🚀
+# Nmap Simulation Project 
 
-## Overview 🌐
+## Overview 
 
-This project simulates basic functionalities of the popular `nmap` tool using a custom-built server and client application. The server allows clients to perform network operations such as pinging a host, checking open ports, and testing response times to ports. 🖧💻
+This project simulates basic functionalities of the popular `nmap` tool using a custom-built server and client application. The server allows clients to perform network operations such as pinging a host, checking open ports, and testing response times to ports. 
 
 The simulation includes:
 - **Ping** using ICMP to check if a host is online.
@@ -11,16 +11,16 @@ The simulation includes:
 
 ---
 
-## Features ✨
+## Features 
 
-- **/ping <hostname/IP>**: Sends an ICMP ping request to check if a host is online. 🌍
-- **/port <hostname/IP> <start_port> <end_port> <#num_requests>**: Scans a range of ports to check if they are open. 🔓
-- **/res_time <hostname/IP> <port> <#num_requests>**: Measures the response time of a specific port. ⏱️
-- **/GET <user_ID>**: Retrieves information about a specific user. 📥
-- **/POST <user_name> <user_age>**: Adds a new user to the server. ➕
+- **/ping <hostname/IP>**: Sends an ICMP ping request to check if a host is online. 
+- **/port <hostname/IP> <start_port> <end_port> <#num_requests>**: Scans a range of ports to check if they are open. 
+- **/res_time <hostname/IP> <port> <#num_requests>**: Measures the response time of a specific port. 
+- **/GET <user_ID>**: Retrieves information about a specific user. 
+- **/POST <user_name> <user_age>**: Adds a new user to the server. 
 
 ---
-## Example Commands 💬
+## Example Commands 
 
 - **Ping a host**:
   ```bash
